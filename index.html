@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PLAUSCH Events — yes, we event.</title>
+  <meta name="description" content="PLAUSCH Events — Daydances, Sunset Sessions und Nächte in den Schweizer Bergen. yes, we event.">
+  <meta name="theme-color" content="#060607">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,300..900;1,62..125,300..900&family=Instrument+Serif:ital@0;1&family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=41">
+</head>
+<body data-view="home">
+  <!-- Startbild: Discokugel -->
+  <canvas id="ball" aria-hidden="true"></canvas>
+  <div class="fx-grain" aria-hidden="true"></div>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="thin"><feMorphology operator="erode" radius="1.2"/></filter></svg>
+
+  <!-- Kopfzeile -->
+  <header class="topbar">
+    <button class="orb orb--menu" id="menuBtn" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="menu">
+      <span class="burger" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+
+    <a href="#" class="brand" aria-label="PLAUSCH Events – Startseite">
+      <span class="brand__word">PLAUSCH</span>
+      <span class="brand__sub">Events</span>
+    </a>
+
+    <a href="#tickets" class="orb orb--ticket" aria-label="Tickets">
+      <svg viewBox="4 6 16 12" preserveAspectRatio="none" aria-hidden="true"><path class="tk" d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4Z"/><path d="M14.5 6.5v2M14.5 11v2M14.5 15.5v2" class="perf"/></svg>
+    </a>
+  </header>
+
+  <!-- Home -->
+  <main class="home" id="home">
+    <div class="home__copy">
+      <h1 class="home__title">
+        <span class="l1">Yes,</span>
+        <span class="l2">we <em>event.</em></span>
+      </h1>
+    </div>
+    <div class="home__meta">
+      <a href="https://www.instagram.com/plausch.events/" target="_blank" rel="noopener" class="ig-link">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1" class="fill"/></svg>
+        @plausch.events
+      </a>
+      <div class="peak-badge peak-badge--dark">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,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" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+      <span class="home__hint">Menü <span aria-hidden="true">↖</span></span>
+    </div>
+  </main>
+
+  <!-- Menü -->
+  <nav class="menu" id="menu" aria-label="Hauptmenü" aria-hidden="true">
+    <div class="menu__inner">
+      <ol class="menu__list">
+        <li><a href="#events"><span class="menu__t">Events</span><span class="menu__s">Rückblick</span></a></li>
+        <li><a href="#merch"><span class="menu__t">Merch-Shop</span><span class="menu__s">Tee, Lanyard &amp; Mütze</span></a></li>
+        <li><a href="#tickets"><span class="menu__t">Tickets</span><span class="menu__s">bald via eventfrog</span></a></li>
+        <li><a href="#partner"><span class="menu__t">Partner</span><span class="menu__s">&amp; Anfragen</span></a></li>
+        <li><a href="#jobs"><span class="menu__t">Jobs</span><span class="menu__s">Crew &amp; Bar</span></a></li>
+      </ol>
+      <div class="menu__foot">
+        <p class="menu__claim">yes, we <em>event.</em></p>
+        <div class="menu__links">
+          <a href="https://www.instagram.com/plausch.events/" target="_blank" rel="noopener">Instagram ↗</a>
+          <a href="mailto:hello@plausch.events">hello@plausch.events</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============ EVENTS ============ -->
+  <section class="panel" id="panel-events" data-panel="events" aria-label="Events" hidden>
+    <div class="panel__scroll">
+      <div class="events" id="eventsGrid"></div>
+
+      <div class="moments">
+        <h3 class="sub">Momente</h3>
+        <div class="moments__track">
+          <div class="moments__row">
+            <img src="assets/ig/moment-02.jpg" alt="PLAUSCH Neonrahmen am Abend" loading="lazy">
+            <img src="assets/ig/moment-03.jpg" alt="Sängerin formt ein Herz auf der Bühne" loading="lazy">
+            <img src="assets/ig/menuhin-stage.jpg" alt="Menge vor der Bühne am Menuhin Festival" loading="lazy">
+            <img src="assets/ig/moment-07.jpg" alt="DJ unter violettem Licht" loading="lazy">
+            <img src="assets/ig/moment-08.jpg" alt="Liveact im roten Zelt" loading="lazy">
+            <img src="assets/ig/moment-01.jpg" alt="Sonnenuntergang über den Bergen" loading="lazy">
+          </div>
+        </div>
+      </div>
+      <footer class="panel__foot"><span>© PLAUSCH Events · <a href="https://www.instagram.com/plausch.events/" target="_blank" rel="noopener">Instagram ↗</a></span>
+        <div class="peak-badge peak-badge--dark">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,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" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ MERCH ============ -->
+  <section class="panel" id="panel-merch" data-panel="merch" aria-labelledby="h-merch" hidden>
+    <div class="panel__scroll">
+      <div class="panel__head">
+        <h2 id="h-merch" class="panel__title">Merch</h2>
+        <p class="panel__lead">Für alle, die den Plausch mit nach Hause nehmen. Limitierte Auflage, in der Schweiz veredelt.</p>
+        <span class="cart" id="cart" aria-live="polite">Warenkorb <b>0</b></span>
+      </div>
+
+      <div class="shop">
+        <!-- T-Shirt -->
+        <article class="product" data-product="Plausch Tee">
+          <div class="product__stage" data-variant="black">
+            <svg class="tee" viewBox="0 0 400 420" role="img" aria-label="PLAUSCH T-Shirt">
+              <defs>
+                <linearGradient id="teeShade" x1="0" x2="1">
+                  <stop offset="0" stop-color="#000" stop-opacity=".35"/>
+                  <stop offset=".25" stop-color="#000" stop-opacity="0"/>
+                  <stop offset=".75" stop-color="#000" stop-opacity="0"/>
+                  <stop offset="1" stop-color="#000" stop-opacity=".35"/>
+                </linearGradient>
+              </defs>
+              <path class="tee__body" d="M146 30c12 18 96 18 108 0l84 30c20 30 34 58 44 86l-58 26-14-14v236c-44 10-200 10-244 0V158l-14 14-58-26c10-28 24-56 44-86Z"/>
+              <path d="M146 30c12 18 96 18 108 0l84 30c20 30 34 58 44 86l-58 26-14-14v236c-44 10-200 10-244 0V158l-14 14-58-26c10-28 24-56 44-86Z" fill="url(#teeShade)"/>
+              <path class="tee__collar" d="M146 30c12 28 96 28 108 0"/>
+              <path class="tee__fold" d="M92 170c4 60 2 130-2 216M308 170c-4 60-2 130 2 216M60 120l22 40M340 120l-22 40M150 270c30 8 70 10 100 0"/>
+              <g class="tee__print" transform="translate(200 140) skewX(-10)">
+                <text x="0" y="0" text-anchor="middle" class="tp-word">PLAUSCH</text>
+                <text x="50" y="13" text-anchor="middle" class="tp-sub">Events</text>
+              </g>
+            </svg>
+          </div>
+          <div class="product__info">
+            <div class="product__row"><h3>Plausch Tee</h3><span class="price">CHF 39.–</span></div>
+            <p>Heavyweight Cotton, 240 g/m², Boxy Fit. Front-Print „PLAUSCH Events“.</p>
+            <div class="opts">
+              <div class="swatches" role="radiogroup" aria-label="Farbe">
+                <button type="button" class="sw sw--black is-on" data-variant="black" aria-label="Schwarz" role="radio" aria-checked="true"></button>
+                <button type="button" class="sw sw--cream" data-variant="cream" aria-label="Crème" role="radio" aria-checked="false"></button>
+              </div>
+              <div class="sizes" role="radiogroup" aria-label="Grösse">
+                <button type="button" role="radio" aria-checked="false">S</button>
+                <button type="button" role="radio" aria-checked="true" class="is-on">M</button>
+                <button type="button" role="radio" aria-checked="false">L</button>
+                <button type="button" role="radio" aria-checked="false">XL</button>
+              </div>
+            </div>
+            <button type="button" class="btn btn--add">In den Warenkorb</button>
+          </div>
+        </article>
+
+        <!-- Lanyard -->
+        <article class="product" data-product="Plausch Lanyard">
+          <div class="product__stage" data-variant="black">
+            <svg class="lanyard" viewBox="0 0 400 420" role="img" aria-label="PLAUSCH Lanyard">
+              <defs>
+                <linearGradient id="metal" x1="0" x2="1" y1="0" y2="1">
+                  <stop offset="0" stop-color="#f4f4f6"/><stop offset=".45" stop-color="#8d8f96"/><stop offset=".6" stop-color="#e9eaee"/><stop offset="1" stop-color="#5d5f66"/>
+                </linearGradient>
+                <path id="strapL" d="M128 -10C104 120 128 230 186 300"/>
+                <path id="strapR" d="M272 -10C296 120 272 230 214 300"/>
+              </defs>
+              <use href="#strapL" class="strap"/>
+              <use href="#strapR" class="strap"/>
+              <text class="strap__txt"><textPath href="#strapL" startOffset="4">PLAUSCH · YES, WE EVENT · PLAUSCH · YES, WE EVENT ·</textPath></text>
+              <text class="strap__txt"><textPath href="#strapR" startOffset="4">PLAUSCH · YES, WE EVENT · PLAUSCH · YES, WE EVENT ·</textPath></text>
+              <rect x="176" y="286" width="48" height="30" rx="5" fill="url(#metal)"/>
+              <rect x="176" y="296" width="48" height="3" fill="#0003"/>
+              <circle cx="200" cy="330" r="12" fill="none" stroke="url(#metal)" stroke-width="5"/>
+              <path d="M200 342c-12 0-16 10-16 22 0 16 8 26 16 26s16-10 16-26c0-6-2-10-5-13" fill="none" stroke="url(#metal)" stroke-width="7" stroke-linecap="round"/>
+              <rect x="206" y="344" width="8" height="12" rx="2" fill="url(#metal)"/>
+            </svg>
+          </div>
+          <div class="product__info">
+            <div class="product__row"><h3>Plausch Lanyard</h3><span class="price">CHF 12.–</span></div>
+            <p>Satin-Band 20 mm, beidseitig bedruckt, Karabiner aus Metall. Für Crew-Pass &amp; Schlüssel.</p>
+            <div class="opts">
+              <div class="swatches" role="radiogroup" aria-label="Farbe">
+                <button type="button" class="sw sw--black is-on" data-variant="black" aria-label="Schwarz" role="radio" aria-checked="true"></button>
+                <button type="button" class="sw sw--cream" data-variant="cream" aria-label="Crème" role="radio" aria-checked="false"></button>
+              </div>
+              <span class="one-size">One Size</span>
+            </div>
+            <button type="button" class="btn btn--add">In den Warenkorb</button>
+          </div>
+        </article>
+
+        <!-- Mütze -->
+        <article class="product" data-product="Plausch Beanie">
+          <div class="product__stage" data-variant="black">
+            <svg class="beanie" viewBox="0 0 400 420" role="img" aria-label="PLAUSCH Mütze">
+              <defs>
+                <pattern id="ribB" width="9" height="10" patternUnits="userSpaceOnUse"><rect width="9" height="10" class="rib-a"/><rect width="3.5" height="10" class="rib-b"/></pattern>
+                <pattern id="ribC" width="9" height="10" patternUnits="userSpaceOnUse"><rect width="9" height="10" class="rib-a"/><rect width="3.5" height="10" class="rib-b"/></pattern>
+                <radialGradient id="beanieShade" cx=".38" cy=".3" r=".8">
+                  <stop offset="0" stop-color="#fff" stop-opacity=".16"/><stop offset=".6" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/>
+                </radialGradient>
+              </defs>
+              <path d="M92 260C88 140 142 70 200 70s112 70 108 190Z" fill="url(#ribB)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <path d="M92 260C88 140 142 70 200 70s112 70 108 190Z" fill="url(#beanieShade)"/>
+              <rect x="76" y="238" width="248" height="96" rx="18" fill="url(#ribC)" stroke="rgba(255,255,255,.12)" stroke-width="1.5"/>
+              <rect x="76" y="238" width="248" height="96" rx="18" fill="url(#beanieShade)"/>
+              <path d="M80 250c80 -12 160 -12 240 0" class="cuff-edge"/>
+              <g transform="translate(200 288)">
+                <rect x="-62" y="-20" width="124" height="40" rx="4" class="patch"/>
+                <text x="0" y="6" text-anchor="middle" class="patch__txt" transform="skewX(-10)">PLAUSCH</text>
+              </g>
+            </svg>
+          </div>
+          <div class="product__info">
+            <div class="product__row"><h3>Plausch Mütze</h3><span class="price">CHF 29.–</span></div>
+            <p>Grobe Rippe aus Merino-Mix, Umschlag mit gewebtem Label. Für kalte Nächte auf dem Berg.</p>
+            <div class="opts">
+              <div class="swatches" role="radiogroup" aria-label="Farbe">
+                <button type="button" class="sw sw--black is-on" data-variant="black" aria-label="Schwarz" role="radio" aria-checked="true"></button>
+                <button type="button" class="sw sw--cream" data-variant="cream" aria-label="Crème" role="radio" aria-checked="false"></button>
+              </div>
+              <span class="one-size">One Size</span>
+            </div>
+            <button type="button" class="btn btn--add">In den Warenkorb</button>
+          </div>
+        </article>
+      </div>
+      <footer class="panel__foot"><span>Preise inkl. MwSt. · Versand innerhalb der Schweiz</span>
+        <div class="peak-badge peak-badge--dark">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,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" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ TICKETS ============ -->
+  <section class="panel panel--center" id="panel-tickets" data-panel="tickets" aria-labelledby="h-tickets" hidden>
+    <div class="panel__scroll">
+      <div class="wip">
+        <div class="wip__ticket">
+          <div class="wip__tape" aria-hidden="true"><span>WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS ·</span></div>
+          <div class="wip__main">
+            <h2 id="h-tickets" class="wip__title">Tickets</h2>
+            <p class="wip__txt">Unser Ticketshop zieht bald hierher — powered by <strong>eventfrog</strong>. Bis dahin: Instagram im Auge behalten.</p>
+            <div class="wip__actions">
+              <span class="btn btn--ghost is-disabled" aria-disabled="true">eventfrog · bald verfügbar</span>
+              <a class="btn" href="https://www.instagram.com/plausch.events/" target="_blank" rel="noopener">Updates auf Instagram ↗</a>
+            </div>
+          </div>
+          <div class="wip__stub" aria-hidden="true">
+            <span>ADMIT</span><span>ONE</span>
+            <svg viewBox="0 0 60 60" class="wip__spin"><circle cx="30" cy="30" r="26"/><path d="M30 12v18l11 7"/></svg>
+          </div>
+          <div class="wip__tape wip__tape--b" aria-hidden="true"><span>WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS · WORK IN PROGRESS ·</span></div>
+        </div>
+      </div>
+      <div class="peak-badge peak-badge--dark peak-badge--tickets">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,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" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+    </div>
+  </section>
+
+  <!-- ============ PARTNER ============ -->
+  <section class="panel" id="panel-partner" data-panel="partner" aria-labelledby="h-partner" hidden>
+    <div class="panel__scroll">
+      <div class="panel__head">
+        <h2 id="h-partner" class="panel__title">Partner</h2>
+        <p class="panel__lead">Ohne sie kein Plausch. Danke an alle, die mit uns Orte, Bühnen und Nächte möglich machen.</p>
+      </div>
+
+      <ul class="logos" aria-label="Partner">
+        <li><span class="lg lg--serif">Menuhin<small>Festival Gstaad</small></span></li>
+        <li><span class="lg lg--wide">GLACIER<b>3000</b></span></li>
+        <li><span class="lg lg--jazz">Montreux<small>Jazz Festival</small></span></li>
+        <li><span class="lg lg--caps">Berghaus<small>Eggli · Gstaad</small></span></li>
+        <li><span class="lg lg--script">Wasserngrat</span></li>
+        <li><span class="lg lg--mono">STIL VOR<b>TALENT</b></span></li>
+        <li class="logos__cta"><a href="#partner-form">Ihr Logo hier? <span>Partner werden →</span></a></li>
+      </ul>
+      <p class="note">Platzhalter-Wortmarken — werden durch die offiziellen Partner-Logos ersetzt.</p>
+
+      <div class="contact" id="partner-form">
+        <div class="contact__intro">
+          <h3 class="sub">Anfragen</h3>
+          <p>Sponsoring, Location, Booking oder eine private Feier mit Plausch-Faktor? Schreib uns — wir melden uns innert 48 Stunden.</p>
+        </div>
+        <form class="form" id="contactForm" novalidate>
+          <div class="field"><input id="f-name" name="name" required autocomplete="name" placeholder=" "><label for="f-name">Name *</label></div>
+          <div class="field"><input id="f-company" name="company" autocomplete="organization" placeholder=" "><label for="f-company">Firma</label></div>
+          <div class="field"><input id="f-mail" name="email" type="email" required autocomplete="email" placeholder=" "><label for="f-mail">E-Mail *</label></div>
+          <div class="field"><input id="f-tel" name="tel" type="tel" autocomplete="tel" placeholder=" "><label for="f-tel">Telefon</label></div>
+          <fieldset class="chips field--full">
+            <legend>Worum geht's?</legend>
+            <label><input type="radio" name="topic" value="Partnerschaft" checked><span>Partnerschaft / Sponsoring</span></label>
+            <label><input type="radio" name="topic" value="Event"><span>Event-Anfrage</span></label>
+            <label><input type="radio" name="topic" value="Booking"><span>Booking</span></label>
+            <label><input type="radio" name="topic" value="Presse"><span>Presse</span></label>
+          </fieldset>
+          <div class="field field--full"><textarea id="f-msg" name="message" rows="4" required placeholder=" "></textarea><label for="f-msg">Nachricht *</label></div>
+          <label class="consent field--full"><input type="checkbox" required name="consent"><span>Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage gespeichert werden.</span></label>
+          <div class="form__end field--full">
+            <p class="form__err" id="formErr" role="alert"></p>
+            <button class="btn btn--big" type="submit">Anfrage senden <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
+        <div class="form__ok" id="formOk" hidden>
+          <p class="big">Merci!</p>
+          <p>Deine Anfrage ist bei uns. Wir melden uns bald.</p>
+        </div>
+      </div>
+      <footer class="panel__foot"><span>© PLAUSCH Events</span>
+        <div class="peak-badge peak-badge--dark">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHcAAAA8CAYAAABcpiUlAAANVklEQVR42uWdeZBcRR3HP783s7sxRIhoALmDRAkJl0BiccllgRymFAiUQIEoIB5QUGWVoJxKAEupAhVREKlCBMIRCBREznAjd4Rw3+G+QhJCsrsz8/WP92vSPmZnZ97sTGCnq169mXf0r7t/3b+7f8/IFEkGJGZW9v8bAbsD2wPjgVWBHn+8DLwPPA/cA1wP3GZmFX83Cb8HK1Xgrg98G9gBmAisBqwAJDRWykAB2NfMpksqmlkpA7sQwR3rcHd0uF8GRjnc3qi//wFuAGZH7/5ffyWZmcl/PwlsAFTq6ENo895mdqWkIlAxs4qkHuBw4ABgQ2AkYFXePSY7wEn0e3tJMyV9pMbKg5IOcWQhqVAnYsPvLSVdImmBhqaU/DzV6y/GcKN2bibpIknzG6z/YUmHhXrj/mb69aQ/X26gzXv5u91+Hi/p/jrfPfoTiJW0gqS/VXmhLKlSpbKK3ytlrt8tacPBEBzB7ZL0hwyMcg24TSE3QmoiaVqm/THcSp39vV/SZtVgDAFyE0ljJb3l1/tr1PMxcpOYnEhaFbgVONTJRxmQL/Mks/xDMb8XEFgBSsBWwN2SdjSzcjUEO9mqSFoJmBWRkgA3qQE3d4kQuwJwHXCswylVgWt19ndL4E5Je5pZqR6K1WC5AFgF6AeK9bCnJOroKOchk7yC0IFGBzZx4CVgNHCtpC0cwUmWxzrJmek8rt/hFYYaoVWQkwBXOn/t93vFJvpbdpngKknbOx9OmmxrmCA7ucxTBroaaVgQAs4FNvOOdg3BIIYOjwQu99UZk6ogPJ0JbDeEcAfts8OdBuwC9DlcGwJElL3fl0laJe2urMmJCPBdpyhquKOSvgXs76ttKAe44HWuC5zokygJ0qmkrYCftgDuJyixDzxAn/PGX7Swv6sAvwv9bbLdAF8bgEXURZZP8IpaQQoLzpd+LGlNXzUBzkmZGdqSler1vw7gqskJEUxrUX8PkLThQPJGg8jtztvxSS78xDR+qHlcBfic62a4wLGB81m1CG4QdgDeAh6P9NjdWgg39LcAHNKGyVsTuXv7udJCOOaDuWfEg/aI+FSrSslhn2dmi/zarr4Syi0c9ECKd/NVW14eCE6AbdtIGic6PwLYpsU8ts+ROBc4IzJebNOGcQ1jOQ5Y21mBNVGP5R309XNUUPZV0ejKXRFYI+o4DQocAW44Z4+yUyBzxP4X2N3MPoz4Vx64lRz9rbjk/JUmEBTUx3JedWV0DuCFnPyvAHzB/6/chN43WHkNuAiYZmaLIum8kBNukkPqDZLymBzjGybiCm7kWTEvcgs5GnwBMAf4fQ7Fv5g5WwNwrwSuqSEjlIA3gDlmNj8yb1YimF05+jvTLXenuWDYCJntbmIST5N0ALBpnkVVzMkDzjSzuZKOAtar09PBEOh755vZrAZMjAWXzK1JuGeb2S2SDnJDT6WFEn48zmtEbCzXys1TRrmAImib4AdwsaQ5NZDQD7zqq+xqM/vISXGzmsDI2JvUxqImJlLuBld8RbSrkxbx6R3qeP6HwLOSjjGz6xwxpSbgt7u/cb8LOcfqzYTPVglmxFpHkJzHkTotDm6SNH/WxseAj4B7P2vIDTO51lFkmdOiApwvaVPXNZNhjtxgtLnGzF4ezp0tRPzqtx2waoNXbQFwnCQb7jO54KRqZ0mrA0uXl523DaULmA9MMbOXgGGP3GAZ6wEmDFPSXCIN2rsK2MrMbnejTaVIZwgZwfQ53PpVBh4BzjKzi0Msmpn10wECBpGT+71h2K8iaezWBZLukDTZzPqD/zjpENVgMfBYxhQ5nEo3qXfvdklTgh29U1SDGWb2HjCijVa15dHXHuBSSeOBSjLMEdsFLASOdyOGhnF/gxVuBHCambXVXhpUkKUZezANemkqDYSbLibdkvGSI7cCHaH67Spp/aTNUR8Ab8fxyzljhAc7EuA2YBszu8n3Bwk6QngMqt838q5cc4ms3gELgs27wMsuAFRyCEZPAXfWWPllYB5wu5ndE21laTZOy9rsBctSqmION+WYYk7ps98lsu4Gnd4PuRtuxQYHKpgRjzCz2XX6cwtpoOWQOA36vZ4u2h/jlrTbn3uWpOeBtaK9NfWQjCtyxC/F/PoMSTdmwlazK/dV4B4zeyqKxFCTcsLJknYn3cJKix318WJ4HLibNES2q9XIDUjZlmVRk/U01IC3gcv9Wm/kX60nZCXAneTHYKVX0tXAL12YykuaA9zJfrSTHCfAKWZ2ue+QmBTtvW2o8XmAlxqIWEyA35jZAhdulpDaQ/PCrXWUXaDYF7hP0pbOQqzJwS7Rfs0ibAftbUaCzSu11uuGmg2ck9lW8UwN8tqMtFyIYK8KzPStqc3EZidNsLDmsJxmAbB2IrcR/+KzwH5VdqndSetdYP2k6RZO6hBnfUuRq2gDcxfwELCzmb3lkmtshLjOB7/QQhUjqC/7+RbS3mHszx1SnpuNWSpHnooK8Efgm2b2SpwIxIOsC2b2AmmCFGvhfqGg1I8GNh6iDdHDHrlJlZilghspLgQmmdmRZrZ4oIw2LuCcFK3kVq3ewA5WaeL9/uVocYJlJtu26LlPAYuAJcCbLhzdD9xrZu9GRoRKNcQGl5SZPSrpdOA4lm3caqVPl5wOiCeATVq4h3kw5D5BmjpBrURu6Nz+ZvZwDcuQQm6mWqTdn/016e6/70TJPOxT5m2ZQZpDqqvNbQvIvBI4suGd9XklUc/h1CWpIKnoZzOzcj2JxVx6DQaOqW69CoNX+pS454IccSvpxrLEKUw74WNmd7gAWmgEfhIZpxs5FJDjyCz5WQ3qcPK6es1sH9KUQYuj1VvObM1s5lBmi0YjxwjSNErPOOtopE3NwFVEDQ8FnmsAvpLIOF3PUaBJY3Y1BIdMbmZ2OvB14C9urixEwlqS8+jK5I3qiYwS9b470nfm7wj8u842dWeMH3nghjYXzOxNh3/LIPDDu8WiGxnybFcYSiuMohyMzwA/kXQ8aQqjbYAJLMvBWMyZ+/FD//+iC4KN5GBc6JPvNVJH+BQ3b24EfH4AXljyti70/y9l7MaNtLnsWsc8j8H+nrOyCVXgh3c/sDyO83qTdebM7pa4waNc5V6xCY9Mv+vY3TmEovBuErEkoryMteorRe7RXHCrJQqtA37pU2utCRnmQgqCoZ5QmUmdRVhSQ/C0jE1c1SZ8VIcC66mCBA0kp4RJHnzSVSZ5EhmTPjbYxPVZHm/J8gpZacazE5H+AdMEV1sZedrXaB1RVIsGe3+wNkaqaKVj7KzxwHiey6nA5s4b7wWmO+ntAg5yXpY1WgR+eb2ZPS1pH2BNv3eZmb3ucLaO/M53mdkDkvYg3VYa6ugnzd3xkJm9kmlfATiYdJdEL3ChR7AkUS7rPUjzVo711fsU6e6+u5pdCJ9FxCYulY+L0uPG5U5JYyT1SFo4SMrcA73OR6Jr34xgnRldP8WvzRqgrkWSzpM0OuajmbzPq0b31pJ0S422/dPTKltHucC8nOvWpqy9eLLbn0sZR0ZwjFSzHM2P7sf1LY6uL/ZrC/x/1k48CvgRMCsgJQomLBFtg5G0MnBTlHkPN2qUI0l5f+AyIEk6iBxXSL1DmztpXAJsQZo082J3Tc51afxA0sx6p0aOkfuAvVwFuiNjnsyaTJNMmC2Rzt7jJteDgH+xLOxoMnC089PCAAEIJ3p7+1xN+rmrY5uwbA9yH+lnCw7vGF7rR4+klz3b+WJJ50jaJCOMxO9tF5G7S6rUG5PHraPrp0bXj/VrV0TXNo2ePTrKoD7X29kt6UW/vkDSFyWNkPR2lMF9SpX2HBvX1RErN0RhmFkvcLKvspHAEcCjkm711Apl583drm7E2z673YbeMwRZ0FcK9njgr8A7vsJXd+rSn0kN2AusA3zJn3vGzK7xOpKorr87G0iAcR3DcwPizOwCJ61zo9s7ALMlTQwqieuW5YxOWqrh1EiiD2JYncHmwUnSF5PuKqqOMh6ppRlfdSUiyUE+KHSaQBX0yOlmNjFCch+wEvCrBmOtYiQuMbNgROgfJGy318wqPll28hUr0ojQDzK7G+R26nm+KgWMl7RxZMULLtZdvB8C3kg6SRVyHXJb/7TNemY2nTSxdkjRu26dEZkWScvBe/N9d3uOIc3nHFbmO1XeHytpgqSfkboSQ4TjTb4rvjszIUeY2QJSp0HI6DPdM80XgR7nwX+OSPqlnabjbilpqQsdH0p61nXaXr/2J3++x8+7Rp+hmR6ErujTMlP9vT4/Px19HkaSlkha25+91Ovp9eezn455T9I63s4Rkp73Z96XtJrXMcHrjMuzkfAVPpPznKtNHYXc9SU9PoDyP0fSaiEIIViBovvXxhJ1VOc/Bqiv7LkiQxtmDPKhrc0iyb47miR9GSPGzpJeq1HXHElfZXkFWi8HYariuu5zTsqOIs2YPgb4gNRHe6aZzXeBqBylz7/Zfz+QMWAE/v0DSY8Bh7kpsJ80Cck0M7shSkDyoBssypH5cR5plMeMkMvCBb8KcCNpzPXisOPAd2vcLGkyafDA7m7+LAMvkG7XOdvTECf/AzutgCNK6d2OAAAAAElFTkSuQmCC" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ============ JOBS ============ -->
+  <section class="panel" id="panel-jobs" data-panel="jobs" aria-labelledby="h-jobs" hidden>
+    <div class="panel__scroll">
+      <div class="panel__head">
+        <h2 id="h-jobs" class="panel__title">Join the Team</h2>
+        <p class="panel__lead">Mittendrin statt nur dabei: Du willst hinter die Kulissen? Wir suchen Menschen, die anpacken und auch um 4 Uhr morgens noch freundlich sind.</p>
+      </div>
+
+      <div class="jobs">
+        <details class="job" open>
+          <summary>
+            <span class="job__t">Event Crew<em>Auf- &amp; Abbau</em></span>
+            <span class="job__tags"><i>Ab sofort</i><i>Flexibel</i><i>Stundenlohn</i></span>
+            <span class="job__plus" aria-hidden="true"></span>
+          </summary>
+          <div class="job__body">
+            <div>
+              <h4>Deine Aufgaben</h4>
+              <ul>
+                <li>Aufbau von Bühne, Bars, Licht &amp; Deko vor dem Event</li>
+                <li>Abbau, Verladen und Aufräumen nach dem Event</li>
+                <li>Unterstützung bei Logistik und Materialtransport</li>
+                <li>Mithilfe bei Einlass und Sicherheit nach Bedarf</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Das bringst du mit</h4>
+              <ul>
+                <li>Mindestens 18 Jahre, körperlich fit, zuverlässig</li>
+                <li>Verfügbarkeit an Wochenenden und frühmorgens</li>
+                <li>Teamgeist — Erfahrung ist ein Plus, kein Muss</li>
+                <li>Führerausweis Kat. B</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Wir bieten</h4>
+              <ul>
+                <li>Faire Entlöhnung pro Stunde</li>
+                <li>Verpflegung &amp; Crew-Merch</li>
+                <li>Gästeliste für Events, an denen du nicht arbeitest</li>
+              </ul>
+            </div>
+            <a class="btn btn--big" href="mailto:hello@plausch.events?subject=Bewerbung%20Event-Crew%20Auf-%20%26%20Abbau">Jetzt bewerben <span aria-hidden="true">→</span></a>
+          </div>
+        </details>
+
+        <details class="job">
+          <summary>
+            <span class="job__t">Barmitarbeiter:in<em>Bar &amp; Service</em></span>
+            <span class="job__tags"><i>Eclipse Ride</i><i>12. August 2026</i><i>Stundenlohn</i></span>
+            <span class="job__plus" aria-hidden="true"></span>
+          </summary>
+          <div class="job__body">
+            <div>
+              <h4>Deine Aufgaben</h4>
+              <ul>
+                <li>Ausschank von Drinks, Longdrinks und Signature-Cocktails</li>
+                <li>Bar vorbereiten, auffüllen und sauber halten</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Das bringst du mit</h4>
+              <ul>
+                <li>Mindestens 18 Jahre</li>
+                <li>Erfahrung in Bar oder Gastro</li>
+                <li>Schnell, sauber, kommunikativ</li>
+                <li>Deutsch &amp; Englisch, Französisch von Vorteil</li>
+              </ul>
+            </div>
+            <div>
+              <h4>Wir bieten</h4>
+              <ul>
+                <li>Faire Entlöhnung pro Stunde</li>
+                <li>Verpflegung &amp; Crew-Merch</li>
+                <li>Gästeliste für Events, an denen du nicht arbeitest</li>
+              </ul>
+            </div>
+            <a class="btn btn--big" href="mailto:hello@plausch.events?subject=Bewerbung%20Barmitarbeiter%3Ain">Jetzt bewerben <span aria-hidden="true">→</span></a>
+          </div>
+        </details>
+      </div>
+
+      <p class="note">Nichts Passendes? Spontanbewerbungen an <a href="mailto:hello@plausch.events">hello@plausch.events</a>.</p>
+      <footer class="panel__foot"><span>© PLAUSCH Events</span>
+        <div class="peak-badge peak-badge--dark">
+  <a href="https://peak-studio.ch" target="_blank" rel="noopener">
+    Website by
+    <img src="data:image/png;base64,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" alt="peak studio" class="peak-badge__logo">
+  </a>
+</div>
+      </footer>
+    </div>
+  </section>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="js/discoball.js?v=9"></script>
+  <script src="js/app.js?v=3"></script>
+</body>
+</html>
